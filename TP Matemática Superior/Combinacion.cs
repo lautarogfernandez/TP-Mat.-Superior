@@ -8,12 +8,17 @@ namespace TP_Matemática_Superior
 {
     class Combinacion
     {      
-        public List<Muestra> muestra1, muestra2;
+        private List<Muestra> _muestras;
 
-        public Combinacion(List<Muestra> muestra1, List<Muestra> muestraTotal)
+        public List<Muestra> Muestra
+        {
+            get { return _muestras; }
+            set { _muestras = value; }
+        }
+        public Combinacion(List<Muestra> muestras, List<Muestra> muestraTotal)
         {
             this.muestra1 = muestra1;
-            this.muestra2 = muestraTotal.Where(muestra => muestra1.Contains(muestra));
+            this.muestra2 = muestraTotal.Where(muestra => muestra1.Contains(muestra)).ToList<Muestra>;
         }
 
         public bool esIgual(Combinacion laOtra)

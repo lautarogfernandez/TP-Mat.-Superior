@@ -8,23 +8,34 @@ namespace TP_Matemática_Superior
 {
     class Muestra
     {
-        public double particulasFotonicas, hidrogenoIonizado;
-
+        private double _particulasFotonicas, _hidrogenoIonizado;
+        #region Getters and Setters
+        public double ParticulasFotonicas
+        {
+            get { return _particulasFotonicas; }
+            set { _particulasFotonicas = value; }
+        }
+        public double HidrogenoIonizado 
+        {
+            get { return _hidrogenoIonizado;}
+            set { _hidrogenoIonizado = value; }
+        }
+        #endregion
         public Muestra(double particulasFotonicas, double hidrogenoIonizado)
         {
-            this.particulasFotonicas = particulasFotonicas;
-            this.hidrogenoIonizado = hidrogenoIonizado;
+            ParticulasFotonicas = particulasFotonicas;
+            HidrogenoIonizado = hidrogenoIonizado;
         }
 
         public bool esIgual(Muestra otraMuestra)
         {
-            return ((this.particulasFotonicas == otraMuestra.particulasFotonicas) && (this.hidrogenoIonizado == otraMuestra.hidrogenoIonizado));
+            return ((ParticulasFotonicas == otraMuestra.ParticulasFotonicas) && (HidrogenoIonizado == otraMuestra.HidrogenoIonizado));
         }
 
-        public int distanciaAlcuadradoConRespectoA(Recta recta)
+        public double distanciaAlcuadradoConRespectoA(Recta recta)
         {
-            double valorDeYEnLARecta = recta.YPara(particulasFotonicas);
-            double distancia = valorDeYEnLARecta - hidrogenoIonizado;
+            double valorDeYEnLARecta = recta.YPara(ParticulasFotonicas);
+            double distancia = valorDeYEnLARecta - HidrogenoIonizado;
             return Math.Pow(distancia,2);
         }
         
