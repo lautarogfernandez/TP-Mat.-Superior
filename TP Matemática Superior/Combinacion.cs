@@ -9,41 +9,50 @@ namespace TP_Matemática_Superior
     class Combinacion
     {      
         private List<Muestra> _muestras;
-
-        public List<Muestra> Muestra
+        #region Setters and Getters
+        public List<Muestra> Muestras
         {
             get { return _muestras; }
             set { _muestras = value; }
         }
-        public Combinacion(List<Muestra> muestras, List<Muestra> muestraTotal)
+        #endregion
+        #region Public methods
+        public Combinacion(List<Muestra> _muestras)
         {
-            this.muestra1 = muestra1;
-            this.muestra2 = muestraTotal.Where(muestra => muestra1.Contains(muestra)).ToList<Muestra>;
+            Muestras = _muestras;
         }
 
-        public bool esIgual(Combinacion laOtra)
+        public bool tieneLosMismosElementos(Combinacion laOtra)
         {
-            return //TODO: ver si sirve
+            return Muestras.TrueForAll(x=>laOtra.Muestras.Exists(y=>y.esIgual(x)));//TODO: ver si sirve
         }
 
-        public int sumaParticulasFotonicas(List<Muestra> muestras)
+        public double sumaParticulasFotonicas(List<Muestra> muestras)
         {
-            return muestras.Select(muestra => muestra.particulasFotonicas).Sum;
+            double sum=0;
+            muestras.ForEach(elemento => sum = sum + elemento.ParticulasFotonicas);
+            return sum;
         }
 
-        public int sumaHidrogenoIonizado(List<Muestra> muestras)
+        public double sumaHidrogenoIonizado(List<Muestra> muestras)
         {
-            return muestras.Select(muestra => muestra.hidrogenoIonizado).Sum;
+            double sum = 0;
+            muestras.ForEach(elemento => sum = sum + elemento.HidrogenoIonizado);
+            return sum;
         }
 
-        public int sumaParticulasFotonicasAlCuadrado(List<Muestra> muestras)
+        public double sumaParticulasFotonicasAlCuadrado(List<Muestra> muestras)
         {
-            return muestras.Select(muestra => Math.Pow(muestra.particulasFotonicas,2)).Sum;
+            double sum = 0;
+            muestras.ForEach(elemento => sum = sum + Math.Pow(elemento.ParticulasFotonicas,2));
+            return sum;
         }
 
-        public int sumaParticulasFotonicasPorHidrogenoIonizado(List<Muestra> muestras)
+        public double sumaParticulasFotonicasPorHidrogenoIonizado(List<Muestra> muestras)
         {
-            return muestras.Select(muestra => muestra.particulasFotonicas * muestra.hidrogenoIonizado).Sum;
+            double sum = 0;
+            muestras.ForEach(elemento => sum = sum + Math.Pow(elemento.HidrogenoIonizado, 2));
+            return sum;
         }
 
         public Recta resolverSistema(double a, double b, double c, double d, double e, double f)
@@ -62,19 +71,24 @@ namespace TP_Matemática_Superior
                 return (new Recta(0, 0));//esta mal pero no se como es
             }
         }
-
-        public double sumaDeDistanciasAlCuadrado(List<Muestra> muestra, Recta recta)
+        #endregion
+        public double sumaDeDistanciasAlCuadrado(List<Muestra> muestras, Recta recta)
         {
-            return sumaDeDistanciasAlCuadrado = muestra1.Select(muestra => muestra.distanciaAlcuadradoConRespectoA(recta)).Sum;
+            double sum = 0;
+            muestras.ForEach(elemento => sum = sum + elemento.distanciaAlcuadradoConRespectoA(recta));
+            return sum;
         }
 
         public Resultado calcularRectas()
         {
-            double sumaX1 = sumaParticulasFotonicas(muestra1);
-            double sumaY1 = sumaHidrogenoIonizado(muestra1);
-            double sumaX1AlCuadrado1 = sumaParticulasFotonicasAlCuadrado(muestra1);
-            double sumaMultiplicacionXY1 = sumaParticulasFotonicasPorHidrogenoIonizado(muestra1);
-            double sumaX2 = sumaParticulasFotonicas(muestra2);
+            double sumaX1 = sumaParticulasFotonicas(Muestras);
+            double sumaY1 = sumaHidrogenoIonizado(Muestras);
+            double sumaX1AlCuadrado1 = sumaParticulasFotonicasAlCuadrado(Muestras);
+            double sumaMultiplicacionXY1 = sumaParticulasFotonicasPorHidrogenoIonizado(Muestras);
+            double sumaX2 = sumaParticulasFotonicas(Muestras);
+            /*Seguir con esto
+             * 
+             */
             double sumaY2 = sumaHidrogenoIonizado(muestra2);
             double sumaX2AlCuadrado2 = sumaParticulasFotonicasAlCuadrado(muestra2);
             double sumaMultiplicacionXY2 = sumaParticulasFotonicasPorHidrogenoIonizado(muestra2);
