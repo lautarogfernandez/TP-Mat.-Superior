@@ -1,0 +1,9 @@
+C:\Users\usuario\Desktop\LAUTARO\Matemática Superior\TP Matemática Superior\TP Matemática Superior\bin\Debug\TP Matemática Superior.exe.config
+C:\Users\usuario\Desktop\LAUTARO\Matemática Superior\TP Matemática Superior\TP Matemática Superior\obj\Debug\TP Matemática Superior.csprojResolveAssemblyReference.cache
+C:\Users\usuario\Desktop\LAUTARO\Matemática Superior\TP Matemática Superior\TP Matemática Superior\obj\Debug\TP_Matemática_Superior.Form1.resources
+C:\Users\usuario\Desktop\LAUTARO\Matemática Superior\TP Matemática Superior\TP Matemática Superior\obj\Debug\TP_Matemática_Superior.Properties.Resources.resources
+C:\Users\usuario\Desktop\LAUTARO\Matemática Superior\TP Matemática Superior\TP Matemática Superior\obj\Debug\TP Matemática Superior.csproj.GenerateResource.Cache
+C:\Users\usuario\Desktop\LAUTARO\Matemática Superior\TP Matemática Superior\TP Matemática Superior\bin\Debug\TP Matemática Superior.exe
+C:\Users\usuario\Desktop\LAUTARO\Matemática Superior\TP Matemática Superior\TP Matemática Superior\bin\Debug\TP Matemática Superior.pdb
+C:\Users\usuario\Desktop\LAUTARO\Matemática Superior\TP Matemática Superior\TP Matemática Superior\obj\Debug\TP Matemática Superior.exe
+C:\Users\usuario\Desktop\LAUTARO\Matemática Superior\TP Matemática Superior\TP Matemática Superior\obj\Debug\TP Matemática Superior.pdb
