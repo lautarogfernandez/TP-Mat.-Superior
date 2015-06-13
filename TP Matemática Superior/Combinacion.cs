@@ -6,24 +6,26 @@ using System.Threading.Tasks;
 
 namespace TP_Matemática_Superior
 {
+    public struct ParametrosListaDeMuestras
+    {
+        public double _sumaX, _sumaY, _sumaXalCuadrado, _sumaXporY, _sumaDeDistanciasAlCuadrado;
+        //Constructor
+        public ParametrosListaDeMuestras(double _sumaX, double _sumaY,
+        double _sumaXalCuadrado, double _sumaXporY, double _sumaDeDistanciasAlCuadrado)
+        {
+            this._sumaX = _sumaX;
+            this._sumaY = _sumaY;
+            this._sumaXalCuadrado = _sumaXalCuadrado;
+            this._sumaXporY = _sumaXporY;
+            this._sumaDeDistanciasAlCuadrado = _sumaDeDistanciasAlCuadrado;
+        }
+    };
 
     class Combinacion
     {
-        private List<List<Muestra>> _muestras;
-        public struct ParametrosListaDeMuestras
-        {
-            public double _sumaX, _sumaY, _sumaXalCuadrado, _sumaXporY, _sumaDeDistanciasAlCuadrado;
-            //Constructor
-            public ParametrosListaDeMuestras(double _sumaX, double _sumaY,
-            double _sumaXalCuadrado, double _sumaXporY,double _sumaDeDistanciasAlCuadrado)
-            {
-                this._sumaX = _sumaX;
-                this._sumaY = _sumaY;
-                this._sumaXalCuadrado = _sumaXalCuadrado;
-                this._sumaXporY = _sumaXporY;
-                this._sumaDeDistanciasAlCuadrado = _sumaDeDistanciasAlCuadrado ;
-            }
-        };
+        public List<List<Muestra>> _muestras;
+
+
         #region Setters and Getters
         public List<List<Muestra>> Muestras
         {
@@ -98,11 +100,15 @@ namespace TP_Matemática_Superior
 
         public ParametrosListaDeMuestras cargarParametrosDeListaDeMuestras(List<Muestra> _listaDeMuestras)
         {
+            double sumaX=sumaParticulasFotonicas(_listaDeMuestras);
+            double sumaY=sumaHidrogenoIonizado(_listaDeMuestras);
+            double sumaXalCuadrado = sumaParticulasFotonicasAlCuadrado(_listaDeMuestras);
+            double sumaXporY = sumaParticulasFotonicasPorHidrogenoIonizado(_listaDeMuestras);
+            double sumaDistanciasAlCuadrado=sumaDeDistanciasAlCuadrado(_listaDeMuestras,
+                resolverSistema(_listaDeMuestras.Count, sumaX, sumaY, sumaX, sumaXalCuadrado, sumaXporY));
             ParametrosListaDeMuestras _nuevoParametro = new ParametrosListaDeMuestras
-                (sumaParticulasFotonicas(_listaDeMuestras),sumaHidrogenoIonizado(_listaDeMuestras),
-                (sumaParticulasFotonicasAlCuadrado(_listaDeMuestras)),
-                (sumaParticulasFotonicasPorHidrogenoIonizado(_listaDeMuestras)),
-                sumaDeDistanciasAlCuadrado(_listaDeMuestras));
+                (sumaX,sumaY,sumaXalCuadrado,
+                sumaXporY, sumaDistanciasAlCuadrado);
             return _nuevoParametro;
         }
         public Resultado calcularRectas()
@@ -110,17 +116,16 @@ namespace TP_Matemática_Superior
 
             
             List<ParametrosListaDeMuestras> _listaParametros=new List<ParametrosListaDeMuestras>();
-            Muestras.ForEach(_listaDeMuestras=>_listaParametros.Add(cargarParametrosDeListaDeMuestras(_listaDeMuestras,
-                resolverSistema(_listaDeMuestras.Count,))));
-
+            Muestras.ForEach(_listaDeMuestras=>_listaParametros.Add(
+                cargarParametrosDeListaDeMuestras(_listaDeMuestras)));
+/*
             double sumaX1 = sumaParticulasFotonicas(Muestras);
             double sumaY1 = sumaHidrogenoIonizado(Muestras);
             double sumaX1AlCuadrado1 = sumaParticulasFotonicasAlCuadrado(Muestras);
             double sumaMultiplicacionXY1 = sumaParticulasFotonicasPorHidrogenoIonizado(Muestras);
             double sumaX2 = sumaParticulasFotonicas(Muestras);
-            /*Seguir con esto
-             * 
-             */
+
+             
             double sumaY2 = sumaHidrogenoIonizado(muestra2);
             double sumaX2AlCuadrado2 = sumaParticulasFotonicasAlCuadrado(muestra2);
             double sumaMultiplicacionXY2 = sumaParticulasFotonicasPorHidrogenoIonizado(muestra2);
@@ -128,7 +133,8 @@ namespace TP_Matemática_Superior
             Recta recta2 = resolverSistema(muestra2.Count, sumaX2, sumaY2, sumaX2, sumaX2AlCuadrado2, sumaMultiplicacionXY2);
             double sumaDeDistanciasAlCuadrado1 = sumaDeDistanciasAlCuadrado(muestra1, recta1);
             double sumaDeDistanciasAlCuadrado2 = sumaDeDistanciasAlCuadrado(muestra2, recta2);
-            return (new Resultado(muestra1, muestra2, recta1, recta2, sumaDeDistanciasAlCuadrado1, sumaDeDistanciasAlCuadrado2));
+ */
+            return (new Resultado(_listaParametros));
         }
 
     }

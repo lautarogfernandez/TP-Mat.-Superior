@@ -15,3 +15,5 @@ C:\FACULTAD\Matemática Superior\TP Matemática Superior\obj\Debug\TP_Matemátic
 C:\FACULTAD\Matemática Superior\TP Matemática Superior\obj\Debug\TP Matemática Superior.csproj.GenerateResource.Cache
 C:\FACULTAD\Nueva carpeta\TP-Mat.-Superior\TP Matemática Superior\bin\Debug\TP Matemática Superior.exe.config
 C:\FACULTAD\Nueva carpeta\TP-Mat.-Superior\TP Matemática Superior\obj\Debug\TP Matemática Superior.exe
+E:\Facultad\Matemática Superior\TP-Mat.-Superior\TP Matemática Superior\bin\Debug\TP Matemática Superior.exe.config
+E:\Facultad\Matemática Superior\TP-Mat.-Superior\TP Matemática Superior\obj\Debug\TP Matemática Superior.exe
