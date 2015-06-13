@@ -6,25 +6,42 @@ using System.Threading.Tasks;
 
 namespace TP_Matemática_Superior
 {
+
     class Combinacion
-    {      
-        private List<Muestra> _muestras;
+    {
+        private List<List<Muestra>> _muestras;
+        public struct ParametrosListaDeMuestras
+        {
+            public double _sumaX, _sumaY, _sumaXalCuadrado, _sumaXporY, _sumaDeDistanciasAlCuadrado;
+            //Constructor
+            public ParametrosListaDeMuestras(double _sumaX, double _sumaY,
+            double _sumaXalCuadrado, double _sumaXporY,double _sumaDeDistanciasAlCuadrado)
+            {
+                this._sumaX = _sumaX;
+                this._sumaY = _sumaY;
+                this._sumaXalCuadrado = _sumaXalCuadrado;
+                this._sumaXporY = _sumaXporY;
+                this._sumaDeDistanciasAlCuadrado = _sumaDeDistanciasAlCuadrado ;
+            }
+        };
         #region Setters and Getters
-        public List<Muestra> Muestras
+        public List<List<Muestra>> Muestras
         {
             get { return _muestras; }
             set { _muestras = value; }
         }
         #endregion
         #region Public methods
-        public Combinacion(List<Muestra> _muestras)
+        public Combinacion(List<List<Muestra>> _muestras)
         {
             Muestras = _muestras;
         }
 
         public bool tieneLosMismosElementos(Combinacion laOtra)
         {
-            return Muestras.TrueForAll(x=>laOtra.Muestras.Exists(y=>y.esIgual(x)));//TODO: ver si sirve
+            return Muestras.TrueForAll(_listaDeMuestras=>_listaDeMuestras.
+                TrueForAll(_muestra=>laOtra.Muestras.Exists(_listaDeMuestras2=>_listaDeMuestras2.Exists(_muestra2
+                    =>_muestra2.esIgual(_muestra)))));//TODO: ver si sirve
         }
 
         public double sumaParticulasFotonicas(List<Muestra> muestras)
@@ -79,8 +96,23 @@ namespace TP_Matemática_Superior
             return sum;
         }
 
+        public ParametrosListaDeMuestras cargarParametrosDeListaDeMuestras(List<Muestra> _listaDeMuestras)
+        {
+            ParametrosListaDeMuestras _nuevoParametro = new ParametrosListaDeMuestras
+                (sumaParticulasFotonicas(_listaDeMuestras),sumaHidrogenoIonizado(_listaDeMuestras),
+                (sumaParticulasFotonicasAlCuadrado(_listaDeMuestras)),
+                (sumaParticulasFotonicasPorHidrogenoIonizado(_listaDeMuestras)),
+                sumaDeDistanciasAlCuadrado(_listaDeMuestras));
+            return _nuevoParametro;
+        }
         public Resultado calcularRectas()
         {
+
+            
+            List<ParametrosListaDeMuestras> _listaParametros=new List<ParametrosListaDeMuestras>();
+            Muestras.ForEach(_listaDeMuestras=>_listaParametros.Add(cargarParametrosDeListaDeMuestras(_listaDeMuestras,
+                resolverSistema(_listaDeMuestras.Count,))));
+
             double sumaX1 = sumaParticulasFotonicas(Muestras);
             double sumaY1 = sumaHidrogenoIonizado(Muestras);
             double sumaX1AlCuadrado1 = sumaParticulasFotonicasAlCuadrado(Muestras);
@@ -92,7 +124,7 @@ namespace TP_Matemática_Superior
             double sumaY2 = sumaHidrogenoIonizado(muestra2);
             double sumaX2AlCuadrado2 = sumaParticulasFotonicasAlCuadrado(muestra2);
             double sumaMultiplicacionXY2 = sumaParticulasFotonicasPorHidrogenoIonizado(muestra2);
-            Recta recta1 = resolverSistema(muestra1.Count, sumaX1, sumaY1, sumaX1, sumaX1AlCuadrado1, sumaMultiplicacionXY1);
+            Recta recta1 = 
             Recta recta2 = resolverSistema(muestra2.Count, sumaX2, sumaY2, sumaX2, sumaX2AlCuadrado2, sumaMultiplicacionXY2);
             double sumaDeDistanciasAlCuadrado1 = sumaDeDistanciasAlCuadrado(muestra1, recta1);
             double sumaDeDistanciasAlCuadrado2 = sumaDeDistanciasAlCuadrado(muestra2, recta2);
