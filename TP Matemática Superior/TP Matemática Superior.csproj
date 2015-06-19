@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Combinacion.cs" />
+    <Compile Include="Combinador.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

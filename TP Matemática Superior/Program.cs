@@ -16,6 +16,7 @@ namespace TP_Matemática_Superior
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Combinador _combinador = new Combinador();
             Application.Run(new Form1());
         }
     }
