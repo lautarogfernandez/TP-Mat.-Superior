@@ -31,12 +31,13 @@
             this._lblIngrese = new System.Windows.Forms.Label();
             this.b_ingresarValor = new System.Windows.Forms.Button();
             this._dgvDatos = new System.Windows.Forms.DataGridView();
-            this._cmbCantTiposMuestra = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.Columna1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this._lblTiposMuestra = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this._grpIngreso = new System.Windows.Forms.GroupBox();
-            this._lblCombinacionesPosibles = new System.Windows.Forms.Label();
+            this.lbl_grupo1 = new System.Windows.Forms.Label();
+            this.lbl_grupo2 = new System.Windows.Forms.Label();
+            this.lbl_error = new System.Windows.Forms.Label();
+            this.lbl_recta = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this._dgvDatos)).BeginInit();
             this._grpIngreso.SuspendLayout();
             this.SuspendLayout();
@@ -52,7 +53,7 @@
             // 
             // b_ingresarValor
             // 
-            this.b_ingresarValor.Location = new System.Drawing.Point(62, 193);
+            this.b_ingresarValor.Location = new System.Drawing.Point(77, 238);
             this.b_ingresarValor.Name = "b_ingresarValor";
             this.b_ingresarValor.Size = new System.Drawing.Size(103, 23);
             this.b_ingresarValor.TabIndex = 3;
@@ -73,27 +74,15 @@
             this._dgvDatos.Location = new System.Drawing.Point(15, 46);
             this._dgvDatos.Name = "_dgvDatos";
             this._dgvDatos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this._dgvDatos.Size = new System.Drawing.Size(509, 87);
+            this._dgvDatos.Size = new System.Drawing.Size(658, 87);
             this._dgvDatos.TabIndex = 7;
             this._dgvDatos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this._dgvDatos_CellContentClick);
             // 
-            // _cmbCantTiposMuestra
+            // Columna1
             // 
-            this._cmbCantTiposMuestra.FormattingEnabled = true;
-            this._cmbCantTiposMuestra.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9"});
-            this._cmbCantTiposMuestra.Location = new System.Drawing.Point(404, 143);
-            this._cmbCantTiposMuestra.Name = "_cmbCantTiposMuestra";
-            this._cmbCantTiposMuestra.Size = new System.Drawing.Size(121, 21);
-            this._cmbCantTiposMuestra.TabIndex = 8;
+            this.Columna1.HeaderText = "1";
+            this.Columna1.Name = "Columna1";
+            this.Columna1.Width = 40;
             // 
             // button1
             // 
@@ -105,55 +94,63 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // Columna1
-            // 
-            this.Columna1.HeaderText = "1";
-            this.Columna1.Name = "Columna1";
-            this.Columna1.Width = 40;
-            // 
-            // _lblTiposMuestra
-            // 
-            this._lblTiposMuestra.AutoSize = true;
-            this._lblTiposMuestra.Location = new System.Drawing.Point(223, 146);
-            this._lblTiposMuestra.Name = "_lblTiposMuestra";
-            this._lblTiposMuestra.Size = new System.Drawing.Size(175, 13);
-            this._lblTiposMuestra.TabIndex = 10;
-            this._lblTiposMuestra.Text = "Cantidad de cada tipo de Muestras:";
-            // 
             // _grpIngreso
             // 
             this._grpIngreso.Controls.Add(this._dgvDatos);
-            this._grpIngreso.Controls.Add(this._lblTiposMuestra);
             this._grpIngreso.Controls.Add(this._lblIngrese);
             this._grpIngreso.Controls.Add(this.button1);
-            this._grpIngreso.Controls.Add(this._cmbCantTiposMuestra);
             this._grpIngreso.Location = new System.Drawing.Point(12, 12);
             this._grpIngreso.Name = "_grpIngreso";
-            this._grpIngreso.Size = new System.Drawing.Size(542, 175);
+            this._grpIngreso.Size = new System.Drawing.Size(713, 175);
             this._grpIngreso.TabIndex = 11;
             this._grpIngreso.TabStop = false;
             this._grpIngreso.Text = "Datos de ingreso:";
             // 
-            // _lblCombinacionesPosibles
+            // lbl_grupo1
             // 
-            this._lblCombinacionesPosibles.AutoSize = true;
-            this._lblCombinacionesPosibles.Location = new System.Drawing.Point(211, 202);
-            this._lblCombinacionesPosibles.Name = "_lblCombinacionesPosibles";
-            this._lblCombinacionesPosibles.Size = new System.Drawing.Size(185, 13);
-            this._lblCombinacionesPosibles.TabIndex = 12;
-            this._lblCombinacionesPosibles.Text = "Cantidad de combinaciones posibles: ";
+            this.lbl_grupo1.AutoSize = true;
+            this.lbl_grupo1.Location = new System.Drawing.Point(453, 220);
+            this.lbl_grupo1.Name = "lbl_grupo1";
+            this.lbl_grupo1.Size = new System.Drawing.Size(0, 13);
+            this.lbl_grupo1.TabIndex = 12;
+            // 
+            // lbl_grupo2
+            // 
+            this.lbl_grupo2.AutoSize = true;
+            this.lbl_grupo2.Location = new System.Drawing.Point(488, 264);
+            this.lbl_grupo2.Name = "lbl_grupo2";
+            this.lbl_grupo2.Size = new System.Drawing.Size(0, 13);
+            this.lbl_grupo2.TabIndex = 13;
+            // 
+            // lbl_error
+            // 
+            this.lbl_error.AutoSize = true;
+            this.lbl_error.Location = new System.Drawing.Point(582, 332);
+            this.lbl_error.Name = "lbl_error";
+            this.lbl_error.Size = new System.Drawing.Size(0, 13);
+            this.lbl_error.TabIndex = 15;
+            // 
+            // lbl_recta
+            // 
+            this.lbl_recta.AutoSize = true;
+            this.lbl_recta.Location = new System.Drawing.Point(547, 288);
+            this.lbl_recta.Name = "lbl_recta";
+            this.lbl_recta.Size = new System.Drawing.Size(0, 13);
+            this.lbl_recta.TabIndex = 14;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(558, 411);
-            this.Controls.Add(this._lblCombinacionesPosibles);
+            this.ClientSize = new System.Drawing.Size(826, 411);
+            this.Controls.Add(this.lbl_error);
+            this.Controls.Add(this.lbl_recta);
+            this.Controls.Add(this.lbl_grupo2);
+            this.Controls.Add(this.lbl_grupo1);
             this.Controls.Add(this._grpIngreso);
             this.Controls.Add(this.b_ingresarValor);
             this.Name = "Form1";
             this.Text = "Formulario de Ingreso";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this._dgvDatos)).EndInit();
             this._grpIngreso.ResumeLayout(false);
             this._grpIngreso.PerformLayout();
@@ -167,12 +164,13 @@
         private System.Windows.Forms.Label _lblIngrese;
         private System.Windows.Forms.Button b_ingresarValor;
         private System.Windows.Forms.DataGridView _dgvDatos;
-        private System.Windows.Forms.ComboBox _cmbCantTiposMuestra;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Columna1;
-        private System.Windows.Forms.Label _lblTiposMuestra;
         private System.Windows.Forms.GroupBox _grpIngreso;
-        private System.Windows.Forms.Label _lblCombinacionesPosibles;
+        private System.Windows.Forms.Label lbl_grupo1;
+        private System.Windows.Forms.Label lbl_grupo2;
+        private System.Windows.Forms.Label lbl_error;
+        private System.Windows.Forms.Label lbl_recta;
     }
 }
 

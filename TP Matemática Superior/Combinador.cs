@@ -18,7 +18,6 @@ namespace TP_Matemática_Superior
         }
         public void combinar(List<Muestra> _muestras, int p)
         {
-
             for (int i = 0; i < _muestras.Count &&p>0; i++)
             {
                 _combinacionActual.Add(_muestras.ElementAt(i));
@@ -33,7 +32,5 @@ namespace TP_Matemática_Superior
             }
         }
 
-
-
-        }
+    }
 }

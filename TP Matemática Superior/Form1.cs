@@ -12,9 +12,9 @@ namespace TP_Matemática_Superior
 {
     public partial class Form1 : Form
     {
-
         List<Muestra> muestras = new List<Muestra>();
         int tamanioMuestra = 10;
+        double error = 0.3;
         
         public Form1()
         {
@@ -27,14 +27,12 @@ namespace TP_Matemática_Superior
             _dgvDatos.Rows.Add(_fila2);
             _dgvDatos.RowHeadersWidthSizeMode=
                 DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-
         }
 
         private void b_ingresarValor_Click_1(object sender, EventArgs e)
-        {
-            _grpIngreso.Enabled = false;
-            //controlar que sean numeros ¿solo positivos?
-            if(_dgvDatos.Columns.Count>_cmbCantTiposMuestra.SelectedIndex+1)
+        {            
+            //controlar que sean numeros ¿solo positivos? .................................
+            if(_dgvDatos.Columns.Count>=tamanioMuestra)
             {
                 List<Muestra> _listaDeMuestras= new List<Muestra>();
                 for (int i = 0; i < _dgvDatos.Columns.Count; i++)
@@ -45,85 +43,83 @@ namespace TP_Matemática_Superior
                         Convert.ToDouble(_dgvDatos.Rows[1].Cells[i].Value));
                     _listaDeMuestras.Add(_nuevaMuestra);
                 }
+
+                //para probar con los valores, despues sacar .............................
+                _listaDeMuestras.Clear();
+                _listaDeMuestras.Add(new Muestra(54, 100));
+                _listaDeMuestras.Add(new Muestra(83,150));
+                _listaDeMuestras.Add(new Muestra(118,	230));
+                _listaDeMuestras.Add(new Muestra(123,	240));
+                _listaDeMuestras.Add(new Muestra(132,	260));
+                _listaDeMuestras.Add(new Muestra(148	,290));
+                _listaDeMuestras.Add(new Muestra(150	,300));
+                _listaDeMuestras.Add(new Muestra(178,	350));
+                _listaDeMuestras.Add(new Muestra(184,	375));
+                _listaDeMuestras.Add(new Muestra(198, 390));
+                //para probar con los valores, despues sacar .............................
+
                 Combinador _combinador = new Combinador();
-                List<Muestra> _muestrasModelos=new List<Muestra>();
-                int p= Convert.ToInt32(_cmbCantTiposMuestra.Text);
-                int n=_listaDeMuestras.Count;
-                for(int i=0;i*p<n;i++)
+                Muestra primerMuestraDeLaCombinacion1 = _listaDeMuestras[0];
+                Muestra primerMuestraDeLaCombinacion2 = _listaDeMuestras[1];                                
+                int n = _listaDeMuestras.Count;
+                int p = 5;
+    
+                //Armo una lista de listas de muestras con las combinaciones de la lista de muestras
+                List<List<Muestra>> _listaDeListaDeMuestras = new List<List<Muestra>>();
+                _listaDeListaDeMuestras = _combinador.realizarCombinaciones(_listaDeMuestras, p);
+                _listaDeListaDeMuestras.RemoveAll(_lista => _lista.Count < p);
+
+                //Filtra las listas que tengan a la primera muestra y no a la segunda
+                List<List<Muestra>> _listaDeListaDeMuestras2 = new List<List<Muestra>>();
+                foreach(List<Muestra> lista in _listaDeListaDeMuestras)
                 {
-                    _muestrasModelos.Add(_listaDeMuestras[0]);
-                    _listaDeMuestras.RemoveAt(0);
+                    if((lista.Contains(primerMuestraDeLaCombinacion1) && (!lista.Contains(primerMuestraDeLaCombinacion2))))
+                        _listaDeListaDeMuestras2.Add(lista);
                 }
-                //armo una lista de listas de muestras con las combinaciones
-                //de la lista de muestras
-                List<List<Muestra>> _listaDeListaDeMuestras =
-                    _combinador.realizarCombinaciones(_listaDeMuestras,
-                    Convert.ToInt32(_cmbCantTiposMuestra.Text));
-                _listaDeListaDeMuestras.RemoveAll(_lista => _lista.Count <
-                   p);
-                _lblCombinacionesPosibles.Text += _listaDeListaDeMuestras.Count.ToString();
-            }
-            /*
-            Muestra muestra = new Muestra(Convert.ToInt32
-                (txt_particulasFotonicas.Text.ToString()),
-                Convert.ToInt32(txt_hidrogenoIonizado.Text.ToString()));
-            muestras.Add(muestra);
-            txt_hidrogenoIonizado.Text = "";
-            txt_particulasFotonicas.Text = "";
-            if (tamanioMuestra - muestras.Count==0)
-            {
-                calcular();
-            }
-            else
-            {
-                MessageBox.Show(string.Format("Muestra guardada correctamente. Faltan ingresar {0} muestras.", tamanioMuestra-muestras.Count), "¡Éxito!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }  
-             */
-            _grpIngreso.Enabled = true;
-        }
+                
+                //A partir de una lista de muestra, generea la complementaria. 
+                List<Combinacion> combinacionesFinales= new List<Combinacion>();
+                foreach (List<Muestra> lista in _listaDeListaDeMuestras2)
+                {
+                    List<Muestra> nuevaLista = new List<Muestra>();
+                    foreach (Muestra item in _listaDeMuestras)
+                    {
+                           if(!(lista.Contains(item))) nuevaLista.Add(item);
+                    }
+                    List<List<Muestra>> listaCombinacion = new List<List<Muestra>>();
+                    listaCombinacion.Add(lista);
+                    listaCombinacion.Add(nuevaLista);
+                    combinacionesFinales.Add(new Combinacion(listaCombinacion));
+                }
 
-        private List<Combinacion> generarCombinaciones(List<Muestra> muestras, int paraElegir)
-        {
-            //ver si hay que tirar error si no cumple condicion
-            List<Combinacion> combinaciones=new List<Combinacion>();
+                List<Resultado> resultados = new List<Resultado>();
+                foreach (Combinacion comb in combinacionesFinales)
+                {
+                    resultados.Add(comb.calcularRectas());
+                }
 
+                List<Resultado> resultadoFinal = new List<Resultado>();                
+                foreach (Resultado res in resultados)
+                {
+                    if (res.errorMenorALoIndicado(error)) resultadoFinal.Add(res);
+                }
 
-
-            return combinaciones;
-        }
-
-        private void calcular(){
-            /*
-            Muestra valor1Muestra1 = muestras[0];
-            muestras.RemoveAt(0);
-            Muestra valor1Muestra2 = muestras[0];
-            muestras.RemoveAt(0);
-            List<Combinacion> combinaciones= generarCombinaciones(muestras, 4);
-            //a todas las combinaciones hay que agregarles el primer elemento
-            foreach (Combinacion combinacion in combinaciones){
-                combinacion.muestra1.Add(valor1Muestra1);
-                combinacion.muestra2.Add(valor1Muestra2);
-            }
-            List<Resultado> resultados=combinaciones.Select(combinacion => combinacion.calcularRectas());
-            resultados.Where(resultado => resultado.errorMenorALoIndicado());
-            
-            if (resultados.Count!=1)
-            {
-                MessageBox.Show("salió mal", "¡MAL!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (resultadoFinal.Count()==1)
+                {
+                    Resultado final = resultadoFinal[0];
+                    //mustrar resultados, puede ser una tabla o algo ..........................................................
+                }
+                else
+                {
+                    MessageBox.Show(string.Format("El método ha fallado."), "¡Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);                    
+                }
             }
             else
             {
-                Resultado resultadoFinal = resultados[0];
-                MessageBox.Show(string.Format("MOSTRAR BIEN EL RESULTADO FINAL", tamanioMuestra-muestras.Count), "¡Éxito!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-             */
+                MessageBox.Show(string.Format("Debe ingresar 10 muestras en total."), "¡Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }              
         }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void button1_Click(object sender, EventArgs e)
         {
             int cantidadFilas=_dgvDatos.Columns.Count+1;
@@ -138,7 +134,7 @@ namespace TP_Matemática_Superior
 
         private void _dgvDatos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            //ver que va a ir aca. Si no va nada, sacalo................................................. 
         }
 
     }

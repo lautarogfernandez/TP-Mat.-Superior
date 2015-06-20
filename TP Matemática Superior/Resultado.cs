@@ -9,9 +9,11 @@ namespace TP_Matemática_Superior
     class Resultado
     {
         public List<ParametrosListaDeMuestras> _listaParametrosDeMuestras;
+        public Combinacion _combinacion;
 
-        public Resultado(List<ParametrosListaDeMuestras> _listaParametros)
+        public Resultado(Combinacion comb,List<ParametrosListaDeMuestras> _listaParametros)
         {
+            _combinacion = comb;
             _listaParametrosDeMuestras = _listaParametros;
         }
 

@@ -9,7 +9,6 @@ namespace TP_Matemática_Superior
     class Muestra
     {
         private double _particulasFotonicas, _hidrogenoIonizado;
-        #region Getters and Setters
         public double ParticulasFotonicas
         {
             get { return _particulasFotonicas; }
@@ -20,7 +19,7 @@ namespace TP_Matemática_Superior
             get { return _hidrogenoIonizado;}
             set { _hidrogenoIonizado = value; }
         }
-        #endregion
+
         public Muestra(double particulasFotonicas, double hidrogenoIonizado)
         {
             ParticulasFotonicas = particulasFotonicas;
