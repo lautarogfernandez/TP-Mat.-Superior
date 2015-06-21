@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace TP_Matemática_Superior
 {
-    class Combinador
+    public class Combinador
     {
 
         List<List<Muestra>> _combinacionesPosibles=new List<List<Muestra>>();
         List<Muestra> _combinacionActual=new List<Muestra>();
+        int cantidadElementos;
         public List<List<Muestra>> realizarCombinaciones(List<Muestra> _muestras, int p)
         {
+            cantidadElementos = p;
             combinar(_muestras, p);
             return _combinacionesPosibles;
         }
@@ -27,7 +29,7 @@ namespace TP_Matemática_Superior
                 combinar(nuevaLista, p - 1);
                 List<Muestra> otraLista = new List<Muestra>();
                 _combinacionActual.ForEach(x => otraLista.Add(x));
-                if(otraLista.Count>p)_combinacionesPosibles.Add(otraLista);
+                if(otraLista.Count==cantidadElementos)_combinacionesPosibles.Add(otraLista);
                 _combinacionActual.RemoveAt(_combinacionActual.Count - 1);
             }
         }

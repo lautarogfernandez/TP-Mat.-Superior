@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TP_Matemática_Superior
 {
-    class Muestra
+    public class Muestra
     {
         private double _particulasFotonicas, _hidrogenoIonizado;
         public double ParticulasFotonicas

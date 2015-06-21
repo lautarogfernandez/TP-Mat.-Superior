@@ -14,7 +14,7 @@ namespace TP_Matemática_Superior
     {
         List<Muestra> muestras = new List<Muestra>();
         int tamanioMuestra = 10;
-        double error = 0.3;
+        double error = 0.9999;
         
         public Form1()
         {
@@ -32,9 +32,9 @@ namespace TP_Matemática_Superior
         private void b_ingresarValor_Click_1(object sender, EventArgs e)
         {            
             //controlar que sean numeros ¿solo positivos? .................................
-            if(_dgvDatos.Columns.Count>=tamanioMuestra)
+            if (_dgvDatos.Columns.Count >= tamanioMuestra)
             {
-                List<Muestra> _listaDeMuestras= new List<Muestra>();
+                List<Muestra> _listaDeMuestras = new List<Muestra>();
                 for (int i = 0; i < _dgvDatos.Columns.Count; i++)
                 {
                     //agregar muestras a una lista de muestras
@@ -46,29 +46,73 @@ namespace TP_Matemática_Superior
 
                 //para probar con los valores, despues sacar .............................
                 _listaDeMuestras.Clear();
-                _listaDeMuestras.Add(new Muestra(54, 100));
-                _listaDeMuestras.Add(new Muestra(83,150));
-                _listaDeMuestras.Add(new Muestra(118,	230));
-                _listaDeMuestras.Add(new Muestra(123,	240));
-                _listaDeMuestras.Add(new Muestra(132,	260));
-                _listaDeMuestras.Add(new Muestra(148	,290));
-                _listaDeMuestras.Add(new Muestra(150	,300));
-                _listaDeMuestras.Add(new Muestra(178,	350));
-                _listaDeMuestras.Add(new Muestra(184,	375));
+                _listaDeMuestras.Add(new Muestra(118, 230));
+                _listaDeMuestras.Add(new Muestra(123, 240));
+                _listaDeMuestras.Add(new Muestra(132, 260));
+                _listaDeMuestras.Add(new Muestra(148, 290));
+                _listaDeMuestras.Add(new Muestra(150, 300));
+                _listaDeMuestras.Add(new Muestra(178, 350));
+                _listaDeMuestras.Add(new Muestra(184, 375));
                 _listaDeMuestras.Add(new Muestra(198, 390));
                 //para probar con los valores, despues sacar .............................
 
                 Combinador _combinador = new Combinador();
-                Muestra primerMuestraDeLaCombinacion1 = _listaDeMuestras[0];
-                Muestra primerMuestraDeLaCombinacion2 = _listaDeMuestras[1];                                
+                Muestra primerMuestraDeLaCombinacion1 = new Muestra(54, 100);
+                Muestra primerMuestraDeLaCombinacion2 = new Muestra(83, 150);
                 int n = _listaDeMuestras.Count;
-                int p = 5;
-    
+                int p = 4;
+
                 //Armo una lista de listas de muestras con las combinaciones de la lista de muestras
                 List<List<Muestra>> _listaDeListaDeMuestras = new List<List<Muestra>>();
                 _listaDeListaDeMuestras = _combinador.realizarCombinaciones(_listaDeMuestras, p);
-                _listaDeListaDeMuestras.RemoveAll(_lista => _lista.Count < p);
 
+
+                bool seEncontró=false;
+
+                _listaDeListaDeMuestras.ForEach(delegate(List<Muestra> unaListaDeMuestras)
+                {
+                    _listaDeListaDeMuestras.ForEach(delegate(List<Muestra> otraListaDeMuestras)
+                        {
+                            if (unaListaDeMuestras.TrueForAll(elemento =>
+                                !otraListaDeMuestras.Exists(otroElemento => elemento == otroElemento)))
+                            {
+                                unaListaDeMuestras.Add(primerMuestraDeLaCombinacion1);
+                                otraListaDeMuestras.Add(primerMuestraDeLaCombinacion2);
+                                List<List<Muestra>> listaDeListaDeMuestras = new List<List<Muestra>>();
+                                listaDeListaDeMuestras.Add(unaListaDeMuestras);
+                                listaDeListaDeMuestras.Add(otraListaDeMuestras);
+                                Combinacion _combinacion = new Combinacion(listaDeListaDeMuestras);
+                                Resultado _resultado = _combinacion.calcularRectas();
+                                if (_resultado.errorMenorALoIndicado(error))
+                                {
+                                    string cadenaExito = "Combinaciones: ";
+                                    cadenaExito += "\nCombinacion1: ";
+                                    unaListaDeMuestras.ForEach(elemento => cadenaExito =
+                                        cadenaExito + string.Format("({0},{1}) ",
+                                        elemento.ParticulasFotonicas, elemento.HidrogenoIonizado));
+                                    cadenaExito += "\nCombinacion2: ";
+                                    otraListaDeMuestras.ForEach(elemento => cadenaExito =
+                                        cadenaExito + string.Format("({0},{1}) ",
+                                        elemento.ParticulasFotonicas, elemento.HidrogenoIonizado));
+                                    MessageBox.Show(cadenaExito,
+                                        "¡Exito!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                    seEncontró=true;
+                                }
+                                else
+                                {
+                                }
+
+                            }
+                        });
+                }
+                );
+                if(seEncontró==false)
+                {
+
+                    MessageBox.Show("No se encontró la combinacion",
+"¡Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                /*
                 //Filtra las listas que tengan a la primera muestra y no a la segunda
                 List<List<Muestra>> _listaDeListaDeMuestras2 = new List<List<Muestra>>();
                 foreach(List<Muestra> lista in _listaDeListaDeMuestras)
@@ -117,7 +161,11 @@ namespace TP_Matemática_Superior
             else
             {
                 MessageBox.Show(string.Format("Debe ingresar 10 muestras en total."), "¡Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }              
+            }    
+                 * 
+                 */
+            }
+
         }
         
         private void button1_Click(object sender, EventArgs e)

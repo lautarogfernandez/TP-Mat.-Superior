@@ -22,9 +22,9 @@ namespace TP_Matemática_Superior
         }
     };
 
-    class Combinacion
+    public class Combinacion
     {
-        public List<List<Muestra>> _muestras;
+        private List<List<Muestra>> _muestras;
 
         public List<List<Muestra>> Muestras
         {
@@ -37,28 +37,28 @@ namespace TP_Matemática_Superior
             Muestras = _muestras;
         }
 
-        public double sumaParticulasFotonicas(List<Muestra> muestras)
+        private double sumaParticulasFotonicas(List<Muestra> muestras)
         {
             double sum=0;
             muestras.ForEach(elemento => sum = sum + elemento.ParticulasFotonicas);
             return sum;
         }
 
-        public double sumaHidrogenoIonizado(List<Muestra> muestras)
+        private double sumaHidrogenoIonizado(List<Muestra> muestras)
         {
             double sum = 0;
             muestras.ForEach(elemento => sum = sum + elemento.HidrogenoIonizado);
             return sum;
         }
 
-        public double sumaParticulasFotonicasAlCuadrado(List<Muestra> muestras)
+        private double sumaParticulasFotonicasAlCuadrado(List<Muestra> muestras)
         {
             double sum = 0;
             muestras.ForEach(elemento => sum = sum + Math.Pow(elemento.ParticulasFotonicas,2));
             return sum;
         }
 
-        public double sumaParticulasFotonicasPorHidrogenoIonizado(List<Muestra> muestras)
+        private double sumaParticulasFotonicasPorHidrogenoIonizado(List<Muestra> muestras)
         {
             double sum = 0;
             foreach (Muestra item in muestras)
@@ -68,7 +68,7 @@ namespace TP_Matemática_Superior
             return sum;
         }
 
-        public Recta resolverSistema(double a, double b, double c, double d, double e, double f)
+        private Recta resolverSistema(double a, double b, double c, double d, double e, double f)
         {
             double pendiente=0, ordenada=0;
             double det = a * e - b * d;
@@ -84,7 +84,7 @@ namespace TP_Matemática_Superior
             return (new Recta(pendiente, ordenada));
         }
 
-        public double sumaDeDistanciasAlCuadrado(List<Muestra> muestras, Recta recta)
+        private double sumaDeDistanciasAlCuadrado(List<Muestra> muestras, Recta recta)
         {
             double sum = 0;
             muestras.ForEach(elemento => sum = sum + elemento.distanciaAlcuadradoConRespectoA(recta));

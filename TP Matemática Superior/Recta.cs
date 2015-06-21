@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TP_Matemática_Superior
 {
-    class Recta
+    public class Recta
     {
         private double _pendiente, _ordenada;
         public double Pendiente

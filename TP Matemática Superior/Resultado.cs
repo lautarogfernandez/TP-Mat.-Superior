@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TP_Matemática_Superior
 {
-    class Resultado
+    public class Resultado
     {
         public List<ParametrosListaDeMuestras> _listaParametrosDeMuestras;
         public Combinacion _combinacion;
@@ -20,7 +20,7 @@ namespace TP_Matemática_Superior
         public bool errorMenorALoIndicado(double errorMinimo)
         {
             return (_listaParametrosDeMuestras.TrueForAll(parametrosDeMuestra=>
-                parametrosDeMuestra._sumaDeDistanciasAlCuadrado<errorMinimo));
+                parametrosDeMuestra._sumaDeDistanciasAlCuadrado<=errorMinimo));
         }
 
     }
