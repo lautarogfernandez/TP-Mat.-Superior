@@ -28,10 +28,14 @@ namespace TP_Matemática_Superior
                 DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
         }
 
+        private bool esPar(int numero)
+        {
+            return numero % 2 == 0;
+        }
         private void b_ingresarValor_Click_1(object sender, EventArgs e)
         {            
             //controlar que sean numeros ¿solo positivos? .................................
-            if (_dgvDatos.Columns.Count >= tamanioMuestra)
+            if (esPar(_dgvDatos.Columns.Count))
             {
                 List<Muestra> _listaDeMuestras = new List<Muestra>();
                 for (int i = 0; i < _dgvDatos.Columns.Count; i++)
@@ -139,13 +143,13 @@ namespace TP_Matemática_Superior
                 cadenaExito += string.Format("\nRecta Solucion:\nPendiente: {0}, Ordenada: {1}"
                     , combinacionDefinitiva._rectasSolucion[1].Pendiente, combinacionDefinitiva._rectasSolucion[1].Ordenada);
 
-                cadenaExito += string.Format("\nError: {0}", error);
+                cadenaExito += string.Format("\n \nSuma de distancias al cuadrado máxima: {0}", error);
                 MessageBox.Show(cadenaExito,
-                    "¡Exito!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    "¡Exito!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             { 
-                MessageBox.Show(string.Format("Debe ingresar 10 muestras en total."),
+                MessageBox.Show(string.Format("Debe ingresar una cantidad par de muestras."),
                     "¡Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
