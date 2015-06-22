@@ -19,10 +19,10 @@ namespace TP_Matemática_Superior
         {
             InitializeComponent();
             DataGridViewRow _fila=new DataGridViewRow();
-            _fila.HeaderCell.Value="Particulas Fotónicas";
+            _fila.HeaderCell.Value="Hidrógeno Ionizado";
             _dgvDatos.Rows.Add(_fila);
             DataGridViewRow _fila2 = new DataGridViewRow();
-            _fila2.HeaderCell.Value = "Hidrogeno Ionizado";
+            _fila2.HeaderCell.Value = "Particulas Fotónicas";
             _dgvDatos.Rows.Add(_fila2);
             _dgvDatos.RowHeadersWidthSizeMode=
                 DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
@@ -43,23 +43,10 @@ namespace TP_Matemática_Superior
                     _listaDeMuestras.Add(_nuevaMuestra);
                 }
 
-                //para probar con los valores, despues sacar .............................
-                _listaDeMuestras.Clear();
-                _listaDeMuestras.Add(new Muestra(100,54));
-                _listaDeMuestras.Add(new Muestra(150,83));
-                _listaDeMuestras.Add(new Muestra(230,118));
-                _listaDeMuestras.Add(new Muestra(240,123));
-                _listaDeMuestras.Add(new Muestra(260,132));
-                _listaDeMuestras.Add(new Muestra(290,148));
-                _listaDeMuestras.Add(new Muestra(300,150));
-                _listaDeMuestras.Add(new Muestra(350,178));
-                _listaDeMuestras.Add(new Muestra(375,184));
-                _listaDeMuestras.Add(new Muestra(390,198));
-                //para probar con los valores, despues sacar .............................
 
                 Combinador _combinador = new Combinador();
                 int n = _listaDeMuestras.Count;
-                int p = 5;
+                int p = Convert.ToInt32(Math.Truncate(Convert.ToDouble(_listaDeMuestras.Count/2)));
 
                 //Armo una lista de listas de muestras con las combinaciones de la lista de muestras
                 List<List<Muestra>> _listaDeListaDeMuestras = new List<List<Muestra>>();
