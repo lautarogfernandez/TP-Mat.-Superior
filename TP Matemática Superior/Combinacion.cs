@@ -24,8 +24,9 @@ namespace TP_Matemática_Superior
 
     public class Combinacion
     {
-        private List<List<Muestra>> _muestras;
 
+        private List<List<Muestra>> _muestras;
+        public List<Recta> _rectasSolucion;
         public List<List<Muestra>> Muestras
         {
             get { return _muestras; }
@@ -54,7 +55,7 @@ namespace TP_Matemática_Superior
         private double sumaParticulasFotonicasAlCuadrado(List<Muestra> muestras)
         {
             double sum = 0;
-            muestras.ForEach(elemento => sum = sum + Math.Pow(elemento.ParticulasFotonicas,2));
+            muestras.ForEach(elemento => sum = sum + elemento.ParticulasFotonicas*elemento.ParticulasFotonicas);
             return sum;
         }
 
@@ -97,8 +98,9 @@ namespace TP_Matemática_Superior
             double sumaY=sumaHidrogenoIonizado(_listaDeMuestras);
             double sumaXalCuadrado = sumaParticulasFotonicasAlCuadrado(_listaDeMuestras);
             double sumaXporY = sumaParticulasFotonicasPorHidrogenoIonizado(_listaDeMuestras);
+            _rectasSolucion.Add(resolverSistema(_listaDeMuestras.Count, sumaX, sumaY, sumaX, sumaXalCuadrado, sumaXporY));
             double sumaDistanciasAlCuadrado=sumaDeDistanciasAlCuadrado(_listaDeMuestras,
-                resolverSistema(_listaDeMuestras.Count, sumaX, sumaY, sumaX, sumaXalCuadrado, sumaXporY));
+                _rectasSolucion.ElementAt(_rectasSolucion.Count-1));
             ParametrosListaDeMuestras _nuevoParametro = new ParametrosListaDeMuestras
                 (sumaX,sumaY,sumaXalCuadrado,
                 sumaXporY, sumaDistanciasAlCuadrado);
@@ -106,10 +108,13 @@ namespace TP_Matemática_Superior
         }
 
         public Resultado calcularRectas()
-        {            
+        {
+
+            _rectasSolucion = new List<Recta>();
             List<ParametrosListaDeMuestras> _listaParametros=new List<ParametrosListaDeMuestras>();
             Muestras.ForEach(_listaDeMuestras=>_listaParametros.Add(
                 cargarParametrosDeListaDeMuestras(_listaDeMuestras)));
+
             return (new Resultado(this,_listaParametros));
         }
 

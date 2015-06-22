@@ -14,7 +14,6 @@ namespace TP_Matemática_Superior
     {
         List<Muestra> muestras = new List<Muestra>();
         int tamanioMuestra = 10;
-        double error = 0.9999;
         
         public Form1()
         {
@@ -46,126 +45,122 @@ namespace TP_Matemática_Superior
 
                 //para probar con los valores, despues sacar .............................
                 _listaDeMuestras.Clear();
-                _listaDeMuestras.Add(new Muestra(118, 230));
-                _listaDeMuestras.Add(new Muestra(123, 240));
-                _listaDeMuestras.Add(new Muestra(132, 260));
-                _listaDeMuestras.Add(new Muestra(148, 290));
-                _listaDeMuestras.Add(new Muestra(150, 300));
-                _listaDeMuestras.Add(new Muestra(178, 350));
-                _listaDeMuestras.Add(new Muestra(184, 375));
-                _listaDeMuestras.Add(new Muestra(198, 390));
+                _listaDeMuestras.Add(new Muestra(100,54));
+                _listaDeMuestras.Add(new Muestra(150,83));
+                _listaDeMuestras.Add(new Muestra(230,118));
+                _listaDeMuestras.Add(new Muestra(240,123));
+                _listaDeMuestras.Add(new Muestra(260,132));
+                _listaDeMuestras.Add(new Muestra(290,148));
+                _listaDeMuestras.Add(new Muestra(300,150));
+                _listaDeMuestras.Add(new Muestra(350,178));
+                _listaDeMuestras.Add(new Muestra(375,184));
+                _listaDeMuestras.Add(new Muestra(390,198));
                 //para probar con los valores, despues sacar .............................
 
                 Combinador _combinador = new Combinador();
-                Muestra primerMuestraDeLaCombinacion1 = new Muestra(54, 100);
-                Muestra primerMuestraDeLaCombinacion2 = new Muestra(83, 150);
                 int n = _listaDeMuestras.Count;
-                int p = 4;
+                int p = 5;
 
                 //Armo una lista de listas de muestras con las combinaciones de la lista de muestras
                 List<List<Muestra>> _listaDeListaDeMuestras = new List<List<Muestra>>();
                 _listaDeListaDeMuestras = _combinador.realizarCombinaciones(_listaDeMuestras, p);
+                //Creo error, primero
+                double error = 0;
+                bool primero = true;
+                //Solucion parcial va a ser la mejor solución posible con el menor error
+                List<List<Muestra>> solucionParcial = new List<List<Muestra>>();
 
-
-                bool seEncontró=false;
-
+                //Para cada lista de muestras en la lista de lista de muestras
                 _listaDeListaDeMuestras.ForEach(delegate(List<Muestra> unaListaDeMuestras)
                 {
+                    //para cada otra lista de muestras en la lista de lista de muestras
                     _listaDeListaDeMuestras.ForEach(delegate(List<Muestra> otraListaDeMuestras)
                         {
+                            //Si tienen todos los elementos diferentes
+
                             if (unaListaDeMuestras.TrueForAll(elemento =>
                                 !otraListaDeMuestras.Exists(otroElemento => elemento == otroElemento)))
                             {
-                                unaListaDeMuestras.Add(primerMuestraDeLaCombinacion1);
-                                otraListaDeMuestras.Add(primerMuestraDeLaCombinacion2);
+                                //Los agrego a otra lista de lista de muestras
                                 List<List<Muestra>> listaDeListaDeMuestras = new List<List<Muestra>>();
                                 listaDeListaDeMuestras.Add(unaListaDeMuestras);
                                 listaDeListaDeMuestras.Add(otraListaDeMuestras);
+                                //Trato de resolver el sistema
                                 Combinacion _combinacion = new Combinacion(listaDeListaDeMuestras);
                                 Resultado _resultado = _combinacion.calcularRectas();
+                                //Si es la primera combinación probada
+                                if(primero==true)
+                                {
+                                    //Para cada estructura de parametros de muestras
+                                    _resultado._listaParametrosDeMuestras.ForEach(delegate(ParametrosListaDeMuestras unosParametros)
+                                    {
+                                        //Si es la primer estructura de parámentros de muestra
+                                        if (primero == true)
+                                        {
+                                            //El error es igual al error del primero
+                                            error= unosParametros._sumaDeDistanciasAlCuadrado;
+                                            primero = false;
+                                            //Es la nueva solución parcial
+                                            solucionParcial.Add(unaListaDeMuestras);
+                                            solucionParcial.Add(otraListaDeMuestras);
+                                        }
+                                        else
+                                        {
+                                            //Si el error es mayor, lo asigno a error
+                                            if(unosParametros._sumaDeDistanciasAlCuadrado>error)
+                                            {
+                                                error = unosParametros._sumaDeDistanciasAlCuadrado;
+                                            }
+                                        }
+                                    });
+                                }
+                                //Si el error del resultado es menor al error actual
                                 if (_resultado.errorMenorALoIndicado(error))
                                 {
-                                    string cadenaExito = "Combinaciones: ";
-                                    cadenaExito += "\nCombinacion1: ";
-                                    unaListaDeMuestras.ForEach(elemento => cadenaExito =
-                                        cadenaExito + string.Format("({0},{1}) ",
-                                        elemento.ParticulasFotonicas, elemento.HidrogenoIonizado));
-                                    cadenaExito += "\nCombinacion2: ";
-                                    otraListaDeMuestras.ForEach(elemento => cadenaExito =
-                                        cadenaExito + string.Format("({0},{1}) ",
-                                        elemento.ParticulasFotonicas, elemento.HidrogenoIonizado));
-                                    MessageBox.Show(cadenaExito,
-                                        "¡Exito!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                                    seEncontró=true;
+                                    //Para cada estructura de parámetros del resultado
+                                    error=_resultado._listaParametrosDeMuestras.Max
+                                        (elemento => elemento._sumaDeDistanciasAlCuadrado);
+                                    //Ésta pasa a ser la solución parcial
+                                    solucionParcial.Clear();
+                                    solucionParcial.Add(unaListaDeMuestras);
+                                    solucionParcial.Add(otraListaDeMuestras);
                                 }
-                                else
-                                {
-                                }
-
                             }
                         });
                 }
                 );
-                if(seEncontró==false)
-                {
+                //Muestro la solución definitiva
+                List<Muestra> primerLista = solucionParcial.ElementAt(0);
+                List<Muestra> segundaLista = solucionParcial.ElementAt(1);
+                Combinacion combinacionDefinitiva = new Combinacion(solucionParcial);
+                Resultado resultadoDefinitivo = combinacionDefinitiva.calcularRectas();
+                string cadenaExito = "Combinaciones: ";
+                cadenaExito += "\nCombinacion 1: ";
+                primerLista.ForEach(elemento => cadenaExito =
+                    cadenaExito + string.Format("({0},{1}) ",
+                    elemento.ParticulasFotonicas, elemento.HidrogenoIonizado));
 
-                    MessageBox.Show("No se encontró la combinacion",
-"¡Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                /*
-                //Filtra las listas que tengan a la primera muestra y no a la segunda
-                List<List<Muestra>> _listaDeListaDeMuestras2 = new List<List<Muestra>>();
-                foreach(List<Muestra> lista in _listaDeListaDeMuestras)
-                {
-                    if((lista.Contains(primerMuestraDeLaCombinacion1) && (!lista.Contains(primerMuestraDeLaCombinacion2))))
-                        _listaDeListaDeMuestras2.Add(lista);
-                }
-                
-                //A partir de una lista de muestra, generea la complementaria. 
-                List<Combinacion> combinacionesFinales= new List<Combinacion>();
-                foreach (List<Muestra> lista in _listaDeListaDeMuestras2)
-                {
-                    List<Muestra> nuevaLista = new List<Muestra>();
-                    foreach (Muestra item in _listaDeMuestras)
-                    {
-                           if(!(lista.Contains(item))) nuevaLista.Add(item);
-                    }
-                    List<List<Muestra>> listaCombinacion = new List<List<Muestra>>();
-                    listaCombinacion.Add(lista);
-                    listaCombinacion.Add(nuevaLista);
-                    combinacionesFinales.Add(new Combinacion(listaCombinacion));
-                }
 
-                List<Resultado> resultados = new List<Resultado>();
-                foreach (Combinacion comb in combinacionesFinales)
-                {
-                    resultados.Add(comb.calcularRectas());
-                }
+                cadenaExito += string.Format("\nRecta Solucion:\nPendiente: {0}, Ordenada: {1}\n"
+                    , combinacionDefinitiva._rectasSolucion[0].Pendiente, combinacionDefinitiva._rectasSolucion[0].Ordenada);
 
-                List<Resultado> resultadoFinal = new List<Resultado>();                
-                foreach (Resultado res in resultados)
-                {
-                    if (res.errorMenorALoIndicado(error)) resultadoFinal.Add(res);
-                }
+                cadenaExito += "\nCombinacion 2: ";
+                segundaLista.ForEach(elemento => cadenaExito =
+                    cadenaExito + string.Format("({0},{1}) ",
+                    elemento.ParticulasFotonicas, elemento.HidrogenoIonizado));
 
-                if (resultadoFinal.Count()==1)
-                {
-                    Resultado final = resultadoFinal[0];
-                    //mustrar resultados, puede ser una tabla o algo ..........................................................
-                }
-                else
-                {
-                    MessageBox.Show(string.Format("El método ha fallado."), "¡Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);                    
-                }
+                cadenaExito += string.Format("\nRecta Solucion:\nPendiente: {0}, Ordenada: {1}"
+                    , combinacionDefinitiva._rectasSolucion[1].Pendiente, combinacionDefinitiva._rectasSolucion[1].Ordenada);
+
+                cadenaExito += string.Format("\nError: {0}", error);
+                MessageBox.Show(cadenaExito,
+                    "¡Exito!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else
-            {
-                MessageBox.Show(string.Format("Debe ingresar 10 muestras en total."), "¡Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }    
-                 * 
-                 */
+            { 
+                MessageBox.Show(string.Format("Debe ingresar 10 muestras en total."),
+                    "¡Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
         
         private void button1_Click(object sender, EventArgs e)

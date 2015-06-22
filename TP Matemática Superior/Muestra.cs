@@ -35,7 +35,7 @@ namespace TP_Matemática_Superior
         {
             double valorDeYEnLARecta = recta.YPara(ParticulasFotonicas);
             double distancia = valorDeYEnLARecta - HidrogenoIonizado;
-            return Math.Pow(distancia,2);
+            return distancia*distancia;
         }
         
     }
