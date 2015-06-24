@@ -34,7 +34,6 @@ namespace TP_Matemática_Superior
         }
         private void b_ingresarValor_Click_1(object sender, EventArgs e)
         {            
-            //controlar que sean numeros ¿solo positivos? .................................
             if (esPar(_dgvDatos.Columns.Count))
             {
                 List<Muestra> _listaDeMuestras = new List<Muestra>();
@@ -46,12 +45,9 @@ namespace TP_Matemática_Superior
                         Convert.ToDouble(_dgvDatos.Rows[1].Cells[i].Value));
                     _listaDeMuestras.Add(_nuevaMuestra);
                 }
-
-
                 Combinador _combinador = new Combinador();
                 int n = _listaDeMuestras.Count;
                 int p = Convert.ToInt32(Math.Truncate(Convert.ToDouble(_listaDeMuestras.Count/2)));
-
                 //Armo una lista de listas de muestras con las combinaciones de la lista de muestras
                 List<List<Muestra>> _listaDeListaDeMuestras = new List<List<Muestra>>();
                 _listaDeListaDeMuestras = _combinador.realizarCombinaciones(_listaDeMuestras, p);
@@ -60,7 +56,6 @@ namespace TP_Matemática_Superior
                 bool primero = true;
                 //Solucion parcial va a ser la mejor solución posible con el menor error
                 List<List<Muestra>> solucionParcial = new List<List<Muestra>>();
-
                 //Para cada lista de muestras en la lista de lista de muestras
                 _listaDeListaDeMuestras.ForEach(delegate(List<Muestra> unaListaDeMuestras)
                 {
@@ -68,7 +63,6 @@ namespace TP_Matemática_Superior
                     _listaDeListaDeMuestras.ForEach(delegate(List<Muestra> otraListaDeMuestras)
                         {
                             //Si tienen todos los elementos diferentes
-
                             if (unaListaDeMuestras.TrueForAll(elemento =>
                                 !otraListaDeMuestras.Exists(otroElemento => elemento == otroElemento)))
                             {
@@ -130,19 +124,14 @@ namespace TP_Matemática_Superior
                 primerLista.ForEach(elemento => cadenaExito =
                     cadenaExito + string.Format("({0},{1}) ",
                     elemento.ParticulasFotonicas, elemento.HidrogenoIonizado));
-
-
                 cadenaExito += string.Format("\nRecta Solucion:\nPendiente: {0}, Ordenada: {1}\n"
                     , combinacionDefinitiva._rectasSolucion[0].Pendiente, combinacionDefinitiva._rectasSolucion[0].Ordenada);
-
                 cadenaExito += "\nCombinacion 2: ";
                 segundaLista.ForEach(elemento => cadenaExito =
                     cadenaExito + string.Format("({0},{1}) ",
                     elemento.ParticulasFotonicas, elemento.HidrogenoIonizado));
-
                 cadenaExito += string.Format("\nRecta Solucion:\nPendiente: {0}, Ordenada: {1}"
                     , combinacionDefinitiva._rectasSolucion[1].Pendiente, combinacionDefinitiva._rectasSolucion[1].Ordenada);
-
                 cadenaExito += string.Format("\n \nSuma de distancias al cuadrado máxima: {0}", error);
                 MessageBox.Show(cadenaExito,
                     "¡Exito!", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -168,7 +157,6 @@ namespace TP_Matemática_Superior
 
         private void _dgvDatos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            //ver que va a ir aca. Si no va nada, sacalo................................................. 
         }
 
     }

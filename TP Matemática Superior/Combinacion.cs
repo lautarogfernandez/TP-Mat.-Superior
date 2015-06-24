@@ -9,7 +9,6 @@ namespace TP_Matemática_Superior
     public struct ParametrosListaDeMuestras
     {
         public double _sumaX, _sumaY, _sumaXalCuadrado, _sumaXporY, _sumaDeDistanciasAlCuadrado;
-
         //Constructor
         public ParametrosListaDeMuestras(double _sumaX, double _sumaY,
         double _sumaXalCuadrado, double _sumaXporY, double _sumaDeDistanciasAlCuadrado)
@@ -24,7 +23,6 @@ namespace TP_Matemática_Superior
 
     public class Combinacion
     {
-
         private List<List<Muestra>> _muestras;
         public List<Recta> _rectasSolucion;
         public List<List<Muestra>> Muestras
@@ -114,7 +112,6 @@ namespace TP_Matemática_Superior
             List<ParametrosListaDeMuestras> _listaParametros=new List<ParametrosListaDeMuestras>();
             Muestras.ForEach(_listaDeMuestras=>_listaParametros.Add(
                 cargarParametrosDeListaDeMuestras(_listaDeMuestras)));
-
             return (new Resultado(this,_listaParametros));
         }
 

@@ -24,3 +24,6 @@ C:\FACULTAD\Nueva carpeta\TP-Mat.-Superior\TP Matemática Superior\obj\Debug\TP 
 C:\FACULTAD\Nueva carpeta\TP-Mat.-Superior\TP Matemática Superior\bin\Debug\TP Matemática Superior.exe
 C:\FACULTAD\Nueva carpeta\TP-Mat.-Superior\TP Matemática Superior\bin\Debug\TP Matemática Superior.pdb
 C:\FACULTAD\Nueva carpeta\TP-Mat.-Superior\TP Matemática Superior\obj\Debug\TP Matemática Superior.pdb
+C:\Users\usuario\Documents\GitHub\TP-Mat.-Superior\TP Matemática Superior\bin\Debug\TP Matemática Superior.exe.config
+C:\Users\usuario\Documents\GitHub\TP-Mat.-Superior\TP Matemática Superior\obj\Debug\TP Matemática Superior.exe
+C:\Users\usuario\Documents\GitHub\TP-Mat.-Superior\TP Matemática Superior\obj\Debug\TP Matemática Superior.pdb

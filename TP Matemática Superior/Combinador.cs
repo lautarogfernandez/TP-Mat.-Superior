@@ -8,7 +8,6 @@ namespace TP_Matemática_Superior
 {
     public class Combinador
     {
-
         List<List<Muestra>> _combinacionesPosibles=new List<List<Muestra>>();
         List<Muestra> _combinacionActual=new List<Muestra>();
         int cantidadElementos;
